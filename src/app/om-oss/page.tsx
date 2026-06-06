@@ -176,15 +176,26 @@ export default function OmOss() {
                 </div>
               ))}
             </div>
-            <a
-              href="https://www.reco.se/beckomberga-entreprenad"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:opacity-80 transition-opacity shrink-0"
-              aria-label="Rekommenderat 3 år i rad — reco.se"
-            >
-              <img src="/reco-badge.webp" alt="Rekommenderat 3 år i rad" width={88} height={88} />
-            </a>
+            <div className="flex items-center gap-3 shrink-0">
+              <a
+                href="https://www.reco.se/beckomberga-entreprenad"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity"
+                aria-label="Rekommenderat 3 år i rad — reco.se"
+              >
+                <img src="/reco-badge.webp" alt="Rekommenderat 3 år i rad" width={88} height={88} />
+              </a>
+              <a
+                href="https://www.reco.se/beckomberga-entreprenad"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity"
+                aria-label="Sveriges 3:a bästa målerifirma 2026 — reco.se"
+              >
+                <img src="/reco-2026-3a.png" alt="Sveriges 3:a bästa målerifirma 2026" width={80} height={80} />
+              </a>
+            </div>
           </div>
         </div>
       </section>

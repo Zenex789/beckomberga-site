@@ -135,6 +135,15 @@ export default function HomeHero() {
               >
                 <img src="/reco-badge.webp" alt="Rekommenderat 3 år i rad — reco.se" width={56} height={56} />
               </a>
+              <a
+                href="https://www.reco.se/beckomberga-entreprenad"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block hover:opacity-80 transition-opacity"
+                aria-label="Sveriges 3:a bästa målerifirma 2026 — reco.se"
+              >
+                <img src="/reco-2026-3a.png" alt="Sveriges 3:a bästa målerifirma 2026" width={52} height={52} />
+              </a>
             </div>
 
             {/* CTAs */}
