@@ -50,16 +50,16 @@ export default function StoryTeaser() {
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-6 pt-2">
+            <div className="grid grid-cols-3 gap-4 pt-2">
               <div>
                 <p className="text-2xl font-[500] tracking-tight" style={{ color: "var(--text)" }}>4.9</p>
                 <p className="text-xs" style={{ color: "var(--text-secondary)" }}>Reco-betyg</p>
               </div>
-              <div className="border-l border-[var(--border)] pl-6">
+              <div>
                 <p className="text-2xl font-[500] tracking-tight" style={{ color: "var(--text)" }}>61+</p>
                 <p className="text-xs" style={{ color: "var(--text-secondary)" }}>Verifierade omdömen</p>
               </div>
-              <div className="border-l border-[var(--border)] pl-6">
+              <div>
                 <p className="text-2xl font-[500] tracking-tight" style={{ color: "var(--text)" }}>#3</p>
                 <p className="text-xs" style={{ color: "var(--text-secondary)" }}>Sverige — Reco 2026</p>
               </div>

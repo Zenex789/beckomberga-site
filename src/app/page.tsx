@@ -28,7 +28,7 @@ export default function Home() {
                 Bläddra bland projekt — måleri, microcement och snickeri i Västerort.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 sm:shrink-0">
               <Link
                 href="/projekt"
                 className="px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium text-center"

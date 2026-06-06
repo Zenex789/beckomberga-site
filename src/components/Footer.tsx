@@ -80,7 +80,7 @@ export default function Footer() {
                 </a>
               </p>
               <p>
-                <a href="mailto:hej@beckombergaentreprenad.com" className="hover:text-[var(--dark-text)] transition-colors">
+                <a href="mailto:hej@beckombergaentreprenad.com" className="hover:text-[var(--dark-text)] transition-colors break-all">
                   hej@beckombergaentreprenad.com
                 </a>
               </p>

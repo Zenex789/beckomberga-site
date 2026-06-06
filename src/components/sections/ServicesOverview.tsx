@@ -39,19 +39,18 @@ export default function ServicesOverview({ limit }: { limit?: number }) {
                 className="group relative block overflow-hidden rounded-[var(--radius-lg)] border border-[var(--border)] transition-all hover:border-[var(--text-secondary)]"
                 style={{ background: "var(--surface)", boxShadow: "var(--shadow-soft)" }}
               >
-                <div className="flex items-stretch">
+                <div className="flex flex-col sm:flex-row items-stretch">
                   {/* Thumbnail image */}
-                  <div className="w-40 sm:w-56 shrink-0 overflow-hidden" style={{ minHeight: "160px" }}>
+                  <div className="h-48 sm:h-auto sm:w-56 shrink-0 overflow-hidden">
                     <img
                       src={service.thumbnailImage}
                       alt={service.title}
                       className="w-full h-full object-cover"
-                      style={{ minHeight: "160px" }}
                     />
                   </div>
 
                   {/* Content */}
-                  <div className="flex-1 p-6 flex flex-col justify-between">
+                  <div className="flex-1 p-5 sm:p-6 flex flex-col justify-between">
                     <div>
                       <div className="flex items-start justify-between gap-4">
                         <h3 className="text-lg font-[500] tracking-tight group-hover:text-[var(--accent)] transition-colors">

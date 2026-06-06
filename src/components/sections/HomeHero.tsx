@@ -29,8 +29,8 @@ const transitionVariants = {
 export default function HomeHero() {
   return (
     <section
-      className="relative min-h-[92vh] flex items-center overflow-hidden"
-      style={{ paddingTop: "6rem", paddingBottom: "5rem" }}
+      className="relative min-h-[85vh] md:min-h-[92vh] flex items-center overflow-hidden"
+      style={{ paddingTop: "5rem", paddingBottom: "3.5rem" }}
     >
       {/* Background gradient */}
       <div
@@ -72,7 +72,7 @@ export default function HomeHero() {
           {/* Left — headline + CTA, stagger-animated */}
           <AnimatedGroup
             variants={transitionVariants}
-            className="max-w-2xl space-y-8"
+            className="max-w-2xl space-y-5 md:space-y-8"
           >
             {/* Eyebrow + headline */}
             <div>
@@ -138,17 +138,17 @@ export default function HomeHero() {
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-wrap gap-3 pt-2">
+            <div className="flex flex-col xs:flex-row flex-wrap gap-3 pt-2">
               <Link
                 href="/kontakt"
-                className="px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium transition-colors"
+                className="px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium text-center transition-colors"
                 style={{ background: "var(--text)", color: "var(--dark-text)" }}
               >
                 Begär kostnadsfri offert
               </Link>
               <Link
                 href="/tjanster"
-                className="px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium border border-[var(--border)] hover:border-[var(--text)] transition-colors"
+                className="px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium text-center border border-[var(--border)] hover:border-[var(--text)] transition-colors"
                 style={{ color: "var(--text)" }}
               >
                 Våra tjänster

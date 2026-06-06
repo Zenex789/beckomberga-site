@@ -46,17 +46,17 @@ export default function Tjanster() {
           <p style={{ color: "var(--text-secondary)", maxWidth: "44ch", marginInline: "auto" }}>
             Berätta om ditt projekt och vi återkommer med pris och tidplan.
           </p>
-          <div className="flex justify-center gap-4 flex-wrap">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
             <a
               href="/kontakt"
-              className="px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium"
+              className="px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium text-center"
               style={{ background: "var(--text)", color: "var(--dark-text)" }}
             >
               Begär offert
             </a>
             <a
               href="tel:+46852027786"
-              className="px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium border border-[var(--border)] hover:border-[var(--text)] transition-colors"
+              className="px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium text-center border border-[var(--border)] hover:border-[var(--text)] transition-colors"
               style={{ color: "var(--text)" }}
             >
               Ring 08-520 277 86

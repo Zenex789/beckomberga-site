@@ -28,10 +28,10 @@ export default function Kontakt() {
             Ring oss, mejla eller fyll i formuläret nedan. Vi återkommer med
             en kostnadsfri offert, vanligtvis inom ett par timmar.
           </p>
-          <div className="flex flex-wrap gap-3 mt-6">
+          <div className="flex flex-col sm:flex-row gap-3 mt-6">
             <a
               href="tel:+46852027786"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium"
               style={{ background: "var(--text)", color: "var(--dark-text)" }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
@@ -41,10 +41,10 @@ export default function Kontakt() {
             </a>
             <a
               href="mailto:hej@beckombergaentreprenad.com"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium border border-[var(--border)] hover:border-[var(--text)] transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium border border-[var(--border)] hover:border-[var(--text)] transition-colors"
               style={{ color: "var(--text)" }}
             >
-              hej@beckombergaentreprenad.com
+              Skicka e-post
             </a>
           </div>
         </div>

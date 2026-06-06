@@ -59,7 +59,7 @@ export default function FindUs() {
                 </p>
                 <a
                   href="mailto:hej@beckombergaentreprenad.com"
-                  className="text-base hover:text-[var(--accent)] transition-colors"
+                  className="text-base hover:text-[var(--accent)] transition-colors break-all"
                   style={{ color: "var(--text)" }}
                 >
                   hej@beckombergaentreprenad.com
