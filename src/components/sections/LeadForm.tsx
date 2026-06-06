@@ -51,7 +51,7 @@ export default function LeadForm() {
 
   const inputClass = `
     w-full px-4 py-3 rounded-[var(--radius-sm)] border border-[var(--border)]
-    bg-[var(--surface)] text-[var(--text)] text-sm
+    bg-[var(--surface)] text-[var(--text)] text-base sm:text-sm
     focus:outline-none focus:border-[var(--accent)] transition-colors
     placeholder:text-[var(--text-secondary)]
   `;

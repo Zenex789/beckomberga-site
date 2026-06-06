@@ -100,9 +100,9 @@ export default function HomeHero() {
             </p>
 
             {/* Trust signals */}
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="flex items-center gap-2 px-4 py-2.5 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)]">
-                <span className="text-lg font-semibold" style={{ color: "var(--text)" }}>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)]">
+                <span className="text-base sm:text-lg font-semibold" style={{ color: "var(--text)" }}>
                   4.9
                 </span>
                 <div>
@@ -118,7 +118,7 @@ export default function HomeHero() {
                   </p>
                 </div>
               </div>
-              <div className="px-4 py-2.5 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)]">
+              <div className="px-3 py-2 sm:px-4 sm:py-2.5 rounded-[var(--radius-sm)] border border-[var(--border)] bg-[var(--surface)]">
                 <p className="text-xs font-medium" style={{ color: "var(--text)" }}>
                   F-skattsedel
                 </p>
@@ -133,7 +133,7 @@ export default function HomeHero() {
                 className="block hover:opacity-80 transition-opacity"
                 aria-label="Rekommenderat 3 år i rad — reco.se"
               >
-                <img src="/reco-badge.webp" alt="Rekommenderat 3 år i rad — reco.se" width={56} height={56} />
+                <img src="/reco-badge.webp" alt="Rekommenderat 3 år i rad — reco.se" width={48} height={48} className="sm:w-[56px] sm:h-[56px]" />
               </a>
               <a
                 href="https://www.reco.se/beckomberga-entreprenad"
@@ -142,12 +142,12 @@ export default function HomeHero() {
                 className="block hover:opacity-80 transition-opacity"
                 aria-label="Sveriges 3:a bästa målerifirma 2026 — reco.se"
               >
-                <img src="/reco-2026-3a.png" alt="Sveriges 3:a bästa målerifirma 2026" width={52} height={52} />
+                <img src="/reco-2026-3a.png" alt="Sveriges 3:a bästa målerifirma 2026" width={44} height={44} className="sm:w-[52px] sm:h-[52px]" />
               </a>
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-col xs:flex-row flex-wrap gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 pt-2">
               <Link
                 href="/kontakt"
                 className="px-6 py-3.5 rounded-[var(--radius-sm)] text-sm font-medium text-center transition-colors"
