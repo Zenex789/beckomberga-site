@@ -5,8 +5,6 @@ import {
   useRef,
   useState,
   ReactNode,
-  TouchEvent,
-  WheelEvent,
 } from 'react';
 import { motion } from 'framer-motion';
 
@@ -36,8 +34,14 @@ const ScrollExpandMedia = ({
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [showContent, setShowContent] = useState<boolean>(false);
   const [mediaFullyExpanded, setMediaFullyExpanded] = useState<boolean>(false);
-  const [touchStartY, setTouchStartY] = useState<number>(0);
   const [isMobileState, setIsMobileState] = useState<boolean>(false);
+
+  // Refs for event handler state — avoids re-registering listeners on every update
+  const progressRef = useRef(0);
+  const expandedRef = useRef(false);
+  const touchStartYRef = useRef(0);
+  const isMobileRef = useRef(false);
+  const rafRef = useRef<number | null>(null);
 
   const sectionRef = useRef<HTMLDivElement | null>(null);
 
@@ -45,119 +49,97 @@ const ScrollExpandMedia = ({
     setScrollProgress(0);
     setShowContent(false);
     setMediaFullyExpanded(false);
+    progressRef.current = 0;
+    expandedRef.current = false;
   }, [mediaType]);
 
+  // Check mobile once and keep ref in sync
   useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      if (mediaFullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
-        setMediaFullyExpanded(false);
-        e.preventDefault();
-      } else if (!mediaFullyExpanded) {
-        e.preventDefault();
-        const scrollDelta = e.deltaY * 0.0009;
-        const newProgress = Math.min(
-          Math.max(scrollProgress + scrollDelta, 0),
-          1
-        );
-        setScrollProgress(newProgress);
+    const check = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobileState(mobile);
+      isMobileRef.current = mobile;
+    };
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
+  // Register input listeners once — read/write refs inside, setState for renders
+  useEffect(() => {
+    const commit = (newProgress: number) => {
+      progressRef.current = newProgress;
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => {
+        setScrollProgress(newProgress);
         if (newProgress >= 1) {
+          expandedRef.current = true;
           setMediaFullyExpanded(true);
           setShowContent(true);
         } else if (newProgress < 0.75) {
           setShowContent(false);
         }
+      });
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (expandedRef.current && e.deltaY < 0 && window.scrollY <= 5) {
+        expandedRef.current = false;
+        setMediaFullyExpanded(false);
+        e.preventDefault();
+      } else if (!expandedRef.current) {
+        e.preventDefault();
+        const delta = e.deltaY * 0.0009;
+        commit(Math.min(Math.max(progressRef.current + delta, 0), 1));
       }
     };
 
     const handleTouchStart = (e: TouchEvent) => {
-      setTouchStartY(e.touches[0].clientY);
+      touchStartYRef.current = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (!touchStartY) return;
-
+      if (!touchStartYRef.current) return;
       const touchY = e.touches[0].clientY;
-      const deltaY = touchStartY - touchY;
+      const deltaY = touchStartYRef.current - touchY;
 
-      if (mediaFullyExpanded && deltaY < -20 && window.scrollY <= 5) {
+      if (expandedRef.current && deltaY < -20 && window.scrollY <= 5) {
+        expandedRef.current = false;
         setMediaFullyExpanded(false);
         e.preventDefault();
-      } else if (!mediaFullyExpanded) {
+      } else if (!expandedRef.current) {
         e.preventDefault();
-        const scrollFactor = deltaY < 0 ? 0.008 : 0.005;
-        const scrollDelta = deltaY * scrollFactor;
-        const newProgress = Math.min(
-          Math.max(scrollProgress + scrollDelta, 0),
-          1
-        );
-        setScrollProgress(newProgress);
-
-        if (newProgress >= 1) {
-          setMediaFullyExpanded(true);
-          setShowContent(true);
-        } else if (newProgress < 0.75) {
-          setShowContent(false);
-        }
-
-        setTouchStartY(touchY);
+        // Slightly higher sensitivity on mobile for snappier feel
+        const factor = deltaY < 0 ? 0.01 : 0.007;
+        const newProgress = Math.min(Math.max(progressRef.current + deltaY * factor, 0), 1);
+        commit(newProgress);
+        touchStartYRef.current = touchY;
       }
     };
 
-    const handleTouchEnd = (): void => {
-      setTouchStartY(0);
+    const handleTouchEnd = () => {
+      touchStartYRef.current = 0;
     };
 
-    const handleScroll = (): void => {
-      if (!mediaFullyExpanded) {
-        window.scrollTo(0, 0);
-      }
+    const handleScroll = () => {
+      if (!expandedRef.current) window.scrollTo(0, 0);
     };
 
-    window.addEventListener('wheel', handleWheel as unknown as EventListener, {
-      passive: false,
-    });
-    window.addEventListener('scroll', handleScroll as EventListener);
-    window.addEventListener(
-      'touchstart',
-      handleTouchStart as unknown as EventListener,
-      { passive: false }
-    );
-    window.addEventListener(
-      'touchmove',
-      handleTouchMove as unknown as EventListener,
-      { passive: false }
-    );
-    window.addEventListener('touchend', handleTouchEnd as EventListener);
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd);
 
     return () => {
-      window.removeEventListener(
-        'wheel',
-        handleWheel as unknown as EventListener
-      );
-      window.removeEventListener('scroll', handleScroll as EventListener);
-      window.removeEventListener(
-        'touchstart',
-        handleTouchStart as unknown as EventListener
-      );
-      window.removeEventListener(
-        'touchmove',
-        handleTouchMove as unknown as EventListener
-      );
-      window.removeEventListener('touchend', handleTouchEnd as EventListener);
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [scrollProgress, mediaFullyExpanded, touchStartY]);
-
-  useEffect(() => {
-    const checkIfMobile = (): void => {
-      setIsMobileState(window.innerWidth < 768);
-    };
-
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
-
-    return () => window.removeEventListener('resize', checkIfMobile);
-  }, []);
+  }, []); // empty — listeners register once, read refs for current values
 
   const mediaWidth = 300 + scrollProgress * (isMobileState ? 650 : 1250);
   const mediaHeight = 400 + scrollProgress * (isMobileState ? 200 : 400);
@@ -191,7 +173,7 @@ const ScrollExpandMedia = ({
           <div className='container mx-auto flex flex-col items-center justify-start relative z-10'>
             <div className='flex flex-col items-center justify-center w-full h-[100dvh] relative'>
 
-              {/* ── Title block — clear above the card ── */}
+              {/* ── Title block ── */}
               <div
                 className={`absolute inset-x-0 z-10 flex flex-col items-center transition-none ${
                   textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
@@ -220,7 +202,7 @@ const ScrollExpandMedia = ({
                 )}
               </div>
 
-              {/* ── Media card — stays centered, expands on scroll ── */}
+              {/* ── Media card — GPU-hinted, no layout thrash ── */}
               <div
                 className='absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl overflow-hidden'
                 style={{
@@ -229,6 +211,7 @@ const ScrollExpandMedia = ({
                   maxWidth: '95vw',
                   maxHeight: '85vh',
                   boxShadow: '0 8px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.06)',
+                  willChange: 'width, height',
                 }}
               >
                 {mediaType === 'video' ? (
@@ -293,7 +276,7 @@ const ScrollExpandMedia = ({
                 )}
               </div>
 
-              {/* ── Scroll hint — bottom, fades on scroll ── */}
+              {/* ── Scroll hint ── */}
               {scrollToExpand && (
                 <motion.div
                   className='absolute bottom-8 inset-x-0 z-10 flex flex-col items-center gap-2 pointer-events-none transition-none'
