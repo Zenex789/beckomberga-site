@@ -30,9 +30,13 @@ export default function Projekt() {
         </div>
       </section>
 
-      {/* 3D project cards */}
-      <section className="section-pad overflow-hidden">
+      {/* Project grid */}
+      <section className="section-pad">
         <div className="container-site">
+          <div className="flex items-center justify-between mb-8">
+            <p className="eyebrow">Alla projekt</p>
+            <p className="text-sm" style={{ color: "var(--text-secondary)" }}>6 projekt</p>
+          </div>
           <ProjectCards />
         </div>
       </section>
