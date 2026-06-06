@@ -28,6 +28,7 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
   ({ items, className, radius = 600, autoRotateSpeed = 0.025, autoRotateOnly = false, ...props }, ref) => {
     const [rotation, setRotation] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
+    const [windowWidth, setWindowWidth] = useState(0);
 
     // Drag refs — avoid re-renders during drag
     const isDraggingRef = useRef(false);
@@ -74,6 +75,14 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       };
     }, [autoRotateSpeed]);
 
+    // Track window width for responsive card sizing
+    useEffect(() => {
+      const update = () => setWindowWidth(window.innerWidth);
+      update();
+      window.addEventListener('resize', update, { passive: true });
+      return () => window.removeEventListener('resize', update);
+    }, []);
+
     // Pointer handlers — single API for mouse + touch
     const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
       isDraggingRef.current = true;
@@ -103,10 +112,14 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       setIsDragging(false);
     };
 
-    // Radius just large enough to keep a small visible gap between cards
-    const cardWidth = 220;
+    // Responsive card dimensions — smaller on mobile to fit narrow viewports
+    const isMobile = windowWidth > 0 && windowWidth < 768;
+    const cardWidth = isMobile ? 150 : 220;
+    const cardHeight = isMobile ? 200 : 300;
     const minGap = 30;
-    const safeRadius = Math.max(radius, (cardWidth + minGap) / (2 * Math.sin(Math.PI / items.length)));
+    // On mobile, cap radius at 45% of viewport width; safeRadius ensures no overlap
+    const effectiveRadius = isMobile ? Math.min(radius, Math.floor(windowWidth * 0.45)) : radius;
+    const safeRadius = Math.max(effectiveRadius, (cardWidth + minGap) / (2 * Math.sin(Math.PI / items.length)));
 
     const anglePerItem = 360 / items.length;
 
@@ -146,13 +159,15 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
                 key={item.photo.url}
                 role="group"
                 aria-label={item.common}
-                className="absolute w-[220px] h-[300px]"
+                className="absolute"
                 style={{
+                  width: cardWidth,
+                  height: cardHeight,
                   transform: `rotateY(${itemAngle}deg) translateZ(${safeRadius}px) scale(${scale})`,
                   left: '50%',
                   top: '50%',
-                  marginLeft: '-110px',
-                  marginTop: '-150px',
+                  marginLeft: -cardWidth / 2,
+                  marginTop: -cardHeight / 2,
                   opacity,
                   backfaceVisibility: 'hidden',
                   pointerEvents: 'none',
