@@ -6,7 +6,7 @@ import { services } from "@/content/services";
 export const metadata: Metadata = {
   title: "Tjänster",
   description:
-    "Beckomberga Entreprenad erbjuder måleri, microcement, snickeri och golvslipning i Bromma och Stockholm. Ett kontaktnummer — alla hantverkstjänster.",
+    "Beckomberga Entreprenad erbjuder måleri, microcement, snickeri, golvslipning, el och VVS i Hässelby och Stockholm. Ett kontaktnummer — alla hantverkstjänster.",
 };
 
 export default function Tjanster() {

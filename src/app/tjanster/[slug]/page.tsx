@@ -76,6 +76,16 @@ export default async function ServicePage({
             <p className="leading-relaxed" style={{ color: "var(--text-secondary)" }}>
               {service.longDescription}
             </p>
+            {service.bullets && (
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 pt-1">
+                {service.bullets.map((b) => (
+                  <li key={b} className="flex items-center gap-2 text-sm" style={{ color: "var(--text-secondary)" }}>
+                    <span className="w-1 h-1 rounded-full shrink-0" style={{ background: "var(--accent)" }} />
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           <div className="space-y-4">

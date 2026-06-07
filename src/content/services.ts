@@ -3,7 +3,6 @@ const wx = (id: string, w: number, h: number) =>
   `https://static.wixstatic.com/media/${id}/v1/fill/w_${w},h_${h},al_c,q_85,usm_0.66_1.00_0.01/photo.jpg`;
 
 // Helper: Unsplash CDN — portrait crop suited for gallery cards
-// ixid is the standard "photo-by-page" token; host is "images" or "plus"
 const usp = (host: "images" | "plus", id: string) =>
   `https://${host}.unsplash.com/${id}?auto=format&fit=crop&w=800&h=1000&q=80&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`;
 
@@ -17,6 +16,8 @@ export interface Service {
   tagline: string;
   description: string;
   longDescription: string;
+  /** Optional bullet list of specific sub-services, rendered on the service page */
+  bullets?: string[];
   coverImage: string;
   thumbnailImage: string;
   gallery: { label: string; aspect: string; src: string }[];
@@ -27,11 +28,21 @@ export const services: Service[] = [
   {
     slug: "maleri",
     title: "Måleri",
-    tagline: "Professionell målning — inomhus & utomhus",
+    tagline: "Invändig och utvändig målning för bostäder, BRF och företag",
     description:
-      "Vi utför all typ av målning med hög kvalitet och snabba ledtider. Från bostadsrättsföreningarnas gemensamma utrymmen till privata lägenheter och kommersiella lokaler.",
+      "Vi utför alla typer av måleri — från lägenhetsrenovering och trapphus till fasader och fönstermålningar. Snabba ledtider, ROT-avdrag och F-skattsedel.",
     longDescription:
-      "Oavsett om det gäller att måla om en hel fasad, renovera ett trapphus eller ge ett rum ett nytt utseende — vi levererar precist och städat arbete. Vi använder beprövade produkter och anpassar alltid till underlag och kundens önskemål. F-skattsedel och ROT-avdrag gäller för privatpersoner.",
+      "Vi tar oss an uppdrag för privatpersoner, bostadsrättsföreningar, kontor och kommersiella lokaler i Hässelby och övriga Stockholm. Oavsett om det gäller ett ommålat trapphus, en nymålad lägenhet eller en hel fasad — vi levererar precist och städat arbete med korta ledtider. Vi ombesörjer ROT-hanteringen.",
+    bullets: [
+      "Invändig målning",
+      "Tapetsering",
+      "Golvmålning",
+      "Fasadmålningar",
+      "Staket & smidesmålning",
+      "Skorstensmålning",
+      "Fönstermålningar",
+      "Applicering av microcement",
+    ],
     coverImage: wx("b3fd8b_6f6de8ed7a6f4ccfa0d023ef344e2f69~mv2.jpg", 1200, 900),
     thumbnailImage: wx("b3fd8b_0810dca9d3034665be697cde6c83d1dd~mv2.jpg", 800, 600),
     gallery: [
@@ -80,11 +91,18 @@ export const services: Service[] = [
   {
     slug: "microcement",
     title: "Microcement",
-    tagline: "Moderna, sömlösa ytor i hög kvalitet",
+    tagline: "Moderna, sömlösa ytor — golv, väggar och badrum",
     description:
-      "Microcement är ett premium-ytskikt för golv, väggar och badrum. Resultatet är en slät, sömlös yta med industriell känsla — hållbar, vattentålig och tidlös.",
+      "Professionell applicering av microcement i Stockholm. Appliceras direkt på befintligt underlag utan rivning — perfekt för badrum, kök, hall och golv.",
     longDescription:
-      "Microcement lämpar sig perfekt i badrum, kök, hall och på golv. Materialet appliceras direkt på befintlig yta utan rivning och ger ett unikt estetiskt resultat som passar modern Scandinavisk inredning. Vi hanterar hela processen — från grundning till sista lack- eller vaxskiktet.",
+      "Microcement är en cementbaserad beläggning förstärkt med polymerer som appliceras i tunna lager (2–5 mm) direkt på kakel, betong, trä eller gips — utan rivning. Vi applicerar alltid armeringsnät på golv för hållbarhetens skull och väljer rätt grundning för varje underlag. Resultatet är en fogfri, vattentät yta i valfri kulör och struktur, med minimal bygghöjd. Vi hanterar hela processen — från rådgivning och kulörval till sista lack- eller vaxskiktet.",
+    bullets: [
+      "Golv — fogfritt & slitstark",
+      "Badrum — vattentätt",
+      "Kök & bänkskivor",
+      "Väggar & stänkskydd",
+      "Hall & entré",
+    ],
     coverImage: wx("b3fd8b_14bb52713d8f4dcb859bb717a9538a71~mv2.jpg", 1200, 900),
     thumbnailImage: wx("b3fd8b_3200c55da20743d891be3700a2ec0df5~mv2.jpg", 800, 600),
     gallery: [
@@ -254,6 +272,108 @@ export const services: Service[] = [
         label: "Lyxigt rum med fiskbens­parkett",
         aspect: "aspect-[4/5]",
         src: usp("images", "photo-1776245228715-36b3f34284b9"),
+      },
+    ],
+  },
+  {
+    slug: "elektriker",
+    title: "Elektriker",
+    tagline: "Elinstallationer via certifierad partner",
+    description:
+      "Via vårt partnernätverk erbjuder vi certifierade elinstallationer — köks- och badrumsrenovering, belysning, uttag och ny- eller ominstallation. Du ringer ett nummer, vi samordnar resten.",
+    longDescription:
+      "Behöver ditt projekt en elektriker? Vi samordnar auktoriserade elinstallatörer som del av ditt renoveringsprojekt. Vanliga uppdrag inkluderar elinstallation vid köks- och badrumsrenovering, ny belysning, fler eluttag, omläggning av elledningar och säkringsbyten. Du slipper hålla kontakten med ett extra bolag — vi sköter samordningen och ansvarar för att hela projektet levereras i tid.",
+    bullets: [
+      "Köks- & badrumsinstallation",
+      "Belysning & spots",
+      "Nya eluttag & strömbrytare",
+      "Omläggning av ledningar",
+      "Säkrings­skåp & jordfels­brytare",
+    ],
+    partner: true,
+    coverImage: uspL("photo-1683295083329-4d4738291f3a"),
+    thumbnailImage: uspL("photo-1683295083329-4d4738291f3a", 800, 600),
+    gallery: [
+      {
+        label: "Elektriker med kabel — hantverk",
+        aspect: "aspect-[4/5]",
+        src: usp("images", "photo-1683295083329-4d4738291f3a"),
+      },
+      {
+        label: "Elcentral — kablage",
+        aspect: "aspect-[4/5]",
+        src: usp("images", "photo-1544724569-5f546fd6f2b5"),
+      },
+      {
+        label: "Elektriker på stege",
+        aspect: "aspect-[4/5]",
+        src: usp("images", "photo-1665242043190-0ef29390d289"),
+      },
+      {
+        label: "Eluttag — installation",
+        aspect: "aspect-[4/5]",
+        src: usp("images", "photo-1610056494052-6a4f83a8368c"),
+      },
+      {
+        label: "Modernt badrum — elinstallation",
+        aspect: "aspect-[4/5]",
+        src: usp("images", "photo-1628602813485-4e8b09442e98"),
+      },
+      {
+        label: "Köksrenovering — belysning",
+        aspect: "aspect-[4/5]",
+        src: usp("images", "photo-1585412727061-be62ede56406"),
+      },
+    ],
+  },
+  {
+    slug: "rorledning",
+    title: "Rörmokare",
+    tagline: "VVS och röranläggning via certifierad partner",
+    description:
+      "Via vårt partnernätverk erbjuder vi VVS-arbeten för renovering och nyinstallation. Perfekt när projektet kräver både hantverkare och rörmokare — ett samtal räcker.",
+    longDescription:
+      "Oavsett om det gäller ett nytt badrum, byte av rör och blandare, installation av ny dusch eller ett helt VVS-system — vi koordinerar certifierade rörmokare som del av ditt projekt. Du behöver inte leta upp ett separat bolag, vi sköter samordningen och ansvarar för att leveransen sker i tid och enligt plan.",
+    bullets: [
+      "Badrumsrenovering — VVS",
+      "Blandare & duschabinen",
+      "Lednings­dragning & rörbyte",
+      "Köks­installation",
+      "Golvvärme",
+    ],
+    partner: true,
+    coverImage: uspL("photo-1661107259637-4e1c55462428"),
+    thumbnailImage: uspL("photo-1661107259637-4e1c55462428", 800, 600),
+    gallery: [
+      {
+        label: "Modernt badrum — dubbel handfat",
+        aspect: "aspect-[4/5]",
+        src: usp("images", "photo-1706670344501-0d1edc28193e"),
+      },
+      {
+        label: "Lyxbadrum med stor spegel",
+        aspect: "aspect-[4/5]",
+        src: usp("images", "photo-1661107259637-4e1c55462428"),
+      },
+      {
+        label: "Marmorbadrum — renovering",
+        aspect: "aspect-[4/5]",
+        src: usp("images", "photo-1587527901949-ab0341697c1e"),
+      },
+      {
+        label: "Minimalistiskt badrum — badkar",
+        aspect: "aspect-[4/5]",
+        src: usp("images", "photo-1628602813485-4e8b09442e98"),
+      },
+      {
+        label: "Badrum med vit keramik",
+        aspect: "aspect-[4/5]",
+        src: usp("images", "photo-1576698483491-8c43f0862543"),
+      },
+      {
+        label: "Badrum med skåp och spegel",
+        aspect: "aspect-[4/5]",
+        src: usp("images", "photo-1585412727061-be62ede56406"),
       },
     ],
   },
