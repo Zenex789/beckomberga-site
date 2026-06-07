@@ -18,22 +18,27 @@ export default function ServiceGallery({ items }: Props) {
   return (
     <>
       {/* Mobile: horizontal scroll snap carousel */}
-      <div className="md:hidden -mx-4 px-4">
-        <div
-          className="flex gap-3 overflow-x-auto pb-3"
-          style={{ scrollSnapType: "x mandatory", scrollbarWidth: "none" }}
-        >
+      <div
+        className="md:hidden overflow-x-auto no-scrollbar"
+        style={{
+          scrollSnapType: "x mandatory",
+          WebkitOverflowScrolling: "touch" as never,
+          msOverflowStyle: "none" as never,
+          scrollbarWidth: "none" as never,
+        }}
+      >
+        <div className="flex gap-3" style={{ width: "max-content", paddingBottom: "4px" }}>
           {items.map((item, i) => (
             <button
               key={i}
               onClick={() => setActiveIndex(i)}
-              className="relative flex-none rounded-[var(--radius)] overflow-hidden cursor-pointer group"
+              className="relative flex-none rounded-[var(--radius)] overflow-hidden cursor-pointer"
               style={{ width: "72vw", aspectRatio: "3/4", scrollSnapAlign: "start" }}
             >
               <img
                 src={item.src}
                 alt={item.label}
-                className="w-full h-full object-cover transition-transform duration-500 group-active:scale-[1.02]"
+                className="w-full h-full object-cover"
               />
             </button>
           ))}
@@ -54,7 +59,6 @@ export default function ServiceGallery({ items }: Props) {
             />
           </button>
         )}
-
         {items.length > 1 && (
           <div className="grid grid-cols-3 gap-3">
             {items.slice(1).map((item, i) => (

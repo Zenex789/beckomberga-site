@@ -110,6 +110,9 @@ a { color: inherit; text-decoration: none; }
   color: #fff;
 }
 
+/* ── Scrollbar hide utility ── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
 /* ── Section padding ── */
 .section-pad { padding-top: clamp(4rem, 10vh, 8rem); padding-bottom: clamp(4rem, 10vh, 8rem); }
 
