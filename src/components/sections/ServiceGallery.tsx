@@ -17,28 +17,40 @@ export default function ServiceGallery({ items }: Props) {
 
   return (
     <>
-      {/* Mobile: horizontal scroll snap carousel */}
-      <div
-        className="md:hidden overflow-x-auto no-scrollbar"
-        style={{
-          scrollSnapType: "x mandatory",
-          WebkitOverflowScrolling: "touch" as never,
-          msOverflowStyle: "none" as never,
-          scrollbarWidth: "none" as never,
-        }}
-      >
-        <div className="flex gap-3" style={{ width: "max-content", paddingBottom: "4px" }}>
+      {/* Mobile: swipe carousel — inline styles to prevent Tailwind purge / specificity issues */}
+      <div className="md:hidden">
+        <div
+          style={{
+            display: "flex",
+            overflowX: "scroll",
+            gap: "12px",
+            paddingBottom: "8px",
+            scrollSnapType: "x mandatory",
+            WebkitOverflowScrolling: "touch" as never,
+            scrollbarWidth: "none" as never,
+          }}
+        >
           {items.map((item, i) => (
             <button
               key={i}
               onClick={() => setActiveIndex(i)}
-              className="relative flex-none rounded-[var(--radius)] overflow-hidden cursor-pointer"
-              style={{ width: "72vw", aspectRatio: "3/4", scrollSnapAlign: "start" }}
+              style={{
+                flexShrink: 0,
+                width: "72vw",
+                height: "90vw",
+                borderRadius: "var(--radius)",
+                overflow: "hidden",
+                cursor: "pointer",
+                scrollSnapAlign: "start",
+                border: "none",
+                padding: 0,
+                background: "none",
+              }}
             >
               <img
                 src={item.src}
                 alt={item.label}
-                className="w-full h-full object-cover"
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
               />
             </button>
           ))}
