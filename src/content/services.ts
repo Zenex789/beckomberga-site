@@ -7,6 +7,10 @@ const wx = (id: string, w: number, h: number) =>
 const usp = (host: "images" | "plus", id: string) =>
   `https://${host}.unsplash.com/${id}?auto=format&fit=crop&w=800&h=1000&q=80&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`;
 
+// Helper: Unsplash CDN — landscape crop for cover/thumbnail images
+const uspL = (id: string, w = 1200, h = 900) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&h=${h}&q=85&ixlib=rb-4.1.0`;
+
 export interface Service {
   slug: string;
   title: string;
@@ -198,58 +202,58 @@ export const services: Service[] = [
     longDescription:
       "Slitna och repiga trägolv kan bli som nya med rätt behandling. Processen inkluderar slipning, spackling av sprickor och applicering av olja eller lack beroende på önskad finish. Vi samordnar och ansvarar för hela projektet så att du bara har ett kontaktnummer att ringa.",
     partner: true,
-    coverImage: wx("b3fd8b_5f2d272af86a4103a46bc049c84dd2ce~mv2.jpg", 1200, 900),
-    thumbnailImage: wx("b3fd8b_5f2d272af86a4103a46bc049c84dd2ce~mv2.jpg", 800, 600),
+    coverImage: uspL("photo-1764726331208-71cb385ab08c"),
+    thumbnailImage: uspL("photo-1764726331208-71cb385ab08c", 800, 600),
     gallery: [
       {
-        label: "Trägolv efter slipning och lackning",
+        label: "Loftutrymme — solljus på trägolv",
         aspect: "aspect-[4/5]",
-        src: wx("b3fd8b_5f2d272af86a4103a46bc049c84dd2ce~mv2.jpg", 800, 1000),
+        src: usp("images", "photo-1764726331208-71cb385ab08c"),
       },
       {
-        label: "Undergolvs­förberedelse",
+        label: "Fiskbensmönster — närbild",
         aspect: "aspect-[4/5]",
-        src: wx("b3fd8b_9e98f826209d4c538f37ee5a77b61fcd~mv2.jpg", 800, 1000),
+        src: usp("images", "photo-1770982726897-5e85ad0601c3"),
       },
       {
-        label: "Parkettarbete — Festool",
+        label: "Elegant parkett — Berlin",
         aspect: "aspect-[4/5]",
-        src: wx("b3fd8b_8d265f9664414b1385c8789bab3de82e~mv2.jpg", 800, 1000),
+        src: usp("images", "photo-1598718544285-7180f670198b"),
       },
       {
-        label: "Parkettrenovering — slipning",
+        label: "Tomt rum med trägolv och dörr",
         aspect: "aspect-[4/5]",
-        src: usp("plus", "premium_photo-1683134399397-2407679051f7"),
+        src: usp("images", "photo-1722248211690-b8f359f688d8"),
       },
       {
-        label: "Golv­renovation — hantverk",
+        label: "Stol på brun parkett",
         aspect: "aspect-[4/5]",
-        src: usp("plus", "premium_photo-1683133870879-38293dd03fd2"),
+        src: usp("images", "photo-1590938272761-c11f74452660"),
       },
       {
-        label: "Parkett­mönster — närbild",
+        label: "Fiskbens­parkett — café",
         aspect: "aspect-[4/5]",
-        src: usp("images", "photo-1761053133165-0f3acdaf1770"),
+        src: usp("images", "photo-1769987030169-0535f8c433cc"),
       },
       {
-        label: "Fiskbens­parkett",
+        label: "Rotting­stol på fiskbens­golv",
         aspect: "aspect-[4/5]",
-        src: usp("images", "photo-1761053130711-2515ef532bb5"),
+        src: usp("images", "photo-1758486561455-ebd0d3ba7423"),
       },
       {
-        label: "Renoverat trägolv — resultat",
+        label: "Trägolv med vit dörr",
         aspect: "aspect-[4/5]",
-        src: usp("images", "photo-1639133280761-821824fb6145"),
+        src: usp("images", "photo-1648624219254-1adcd4e49bc6"),
       },
       {
-        label: "Modernt rum med trägolv",
+        label: "Modernt vardagsrum — fiskbens",
         aspect: "aspect-[4/5]",
-        src: usp("images", "photo-1585128792020-803d29415281"),
+        src: usp("images", "photo-1769736436809-eab3de70b175"),
       },
       {
-        label: "Golv­läggning — installation",
+        label: "Lyxigt rum med fiskbens­parkett",
         aspect: "aspect-[4/5]",
-        src: usp("plus", "premium_photo-1683133868074-9a18502cd348"),
+        src: usp("images", "photo-1776245228715-36b3f34284b9"),
       },
     ],
   },
