@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import ServicesOverview from "@/components/sections/ServicesOverview";
+import ServiceGallery from "@/components/sections/ServiceGallery";
+import { services } from "@/content/services";
 
 export const metadata: Metadata = {
   title: "Tjänster",
@@ -32,6 +34,23 @@ export default function Tjanster() {
       </section>
 
       <ServicesOverview />
+
+      {/* Gallery */}
+      <section className="section-pad" style={{ background: "var(--surface)", borderTop: "1px solid var(--border)" }}>
+        <div className="container-site">
+          <p className="eyebrow mb-3">Våra projekt</p>
+          <h2 className="text-[clamp(1.5rem,3vw,2.25rem)] font-[500] leading-[1.1] tracking-[-0.025em] mb-8">
+            Utfört arbete
+          </h2>
+          <ServiceGallery
+            items={services.flatMap((s) => s.gallery.slice(0, 2)).map((g) => ({
+              label: g.label,
+              aspect: g.aspect,
+              src: g.src,
+            }))}
+          />
+        </div>
+      </section>
 
       {/* CTA */}
       <section
