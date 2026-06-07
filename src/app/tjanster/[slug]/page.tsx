@@ -119,16 +119,7 @@ export default async function ServicePage({
           >
             Utförda {service.title.toLowerCase()}-arbeten
           </h2>
-          {/* Mobile: simple 2-col grid (circular gallery breaks at narrow widths) */}
-          <div className="grid grid-cols-2 gap-3 mt-8 md:hidden">
-            {galleryItems.map((item) => (
-              <div key={item.photo.url} className="aspect-[4/3] rounded-lg overflow-hidden">
-                <img src={item.photo.url} alt={item.common} className="w-full h-full object-cover" />
-              </div>
-            ))}
-          </div>
-          {/* Desktop: circular 3D gallery */}
-          <div className="hidden md:block w-full mt-8" style={{ height: "380px" }}>
+          <div className="w-full mt-8" style={{ height: "clamp(260px, 50vw, 380px)" }}>
             <CircularGallery
               items={galleryItems}
               radius={320}

@@ -28,6 +28,8 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
   ({ items, className, radius = 600, autoRotateSpeed = 0.025, autoRotateOnly = false, ...props }, ref) => {
     const [rotation, setRotation] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
+    const [containerWidth, setContainerWidth] = useState(600);
+    const innerRef = useRef<HTMLDivElement>(null);
 
     // Drag refs — avoid re-renders during drag
     const isDraggingRef = useRef(false);
@@ -38,6 +40,16 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
     const lastTimeRef = useRef(0);
 
     const animationFrameRef = useRef<number | null>(null);
+
+    // Measure container width for responsive radius
+    useEffect(() => {
+      const el = innerRef.current;
+      if (!el) return;
+      const ro = new ResizeObserver(([entry]) => setContainerWidth(entry.contentRect.width));
+      ro.observe(el);
+      setContainerWidth(el.offsetWidth);
+      return () => ro.disconnect();
+    }, []);
 
     // Scroll-based rotation (when autoRotateOnly is false)
     useEffect(() => {
@@ -103,16 +115,23 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
       setIsDragging(false);
     };
 
-    // Radius just large enough to keep a small visible gap between cards
-    const cardWidth = 220;
-    const minGap = 30;
-    const safeRadius = Math.max(radius, (cardWidth + minGap) / (2 * Math.sin(Math.PI / items.length)));
+    // Scale cards down on narrow containers (mobile)
+    const cardScale = Math.min(1, containerWidth / 480);
+    const cardWidth = Math.round(220 * cardScale);
+    const cardHeight = Math.round(300 * cardScale);
+    const minGap = 20;
+    const responsiveRadius = Math.min(radius, containerWidth * 0.46);
+    const safeRadius = Math.max(responsiveRadius, (cardWidth + minGap) / (2 * Math.sin(Math.PI / items.length)));
 
     const anglePerItem = 360 / items.length;
 
     return (
       <div
-        ref={ref}
+        ref={(node) => {
+          (innerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+          if (typeof ref === 'function') ref(node);
+          else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+        }}
         role="region"
         aria-label="Bildgalleri"
         className={cn('relative w-full h-full flex items-center justify-center select-none', className)}
@@ -146,13 +165,15 @@ const CircularGallery = React.forwardRef<HTMLDivElement, CircularGalleryProps>(
                 key={item.photo.url}
                 role="group"
                 aria-label={item.common}
-                className="absolute w-[220px] h-[300px]"
+                className="absolute"
                 style={{
+                  width: cardWidth,
+                  height: cardHeight,
                   transform: `rotateY(${itemAngle}deg) translateZ(${safeRadius}px) scale(${scale})`,
                   left: '50%',
                   top: '50%',
-                  marginLeft: '-110px',
-                  marginTop: '-150px',
+                  marginLeft: -cardWidth / 2,
+                  marginTop: -cardHeight / 2,
                   opacity,
                   backfaceVisibility: 'hidden',
                   pointerEvents: 'none',
