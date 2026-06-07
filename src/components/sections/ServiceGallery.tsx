@@ -17,38 +17,62 @@ export default function ServiceGallery({ items }: Props) {
 
   return (
     <>
-      {/* Hero item */}
-      {items[0] && (
-        <button
-          onClick={() => setActiveIndex(0)}
-          className={`relative w-full rounded-[var(--radius-lg)] overflow-hidden mb-4 ${items[0].aspect} block cursor-pointer group`}
+      {/* Mobile: horizontal scroll snap carousel */}
+      <div className="md:hidden -mx-4 px-4">
+        <div
+          className="flex gap-3 overflow-x-auto pb-3"
+          style={{ scrollSnapType: "x mandatory", scrollbarWidth: "none" }}
         >
-          <img
-            src={items[0].src}
-            alt={items[0].label}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-          />
-        </button>
-      )}
-
-      {/* Supporting grid */}
-      {items.length > 1 && (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {items.slice(1).map((item, i) => (
+          {items.map((item, i) => (
             <button
               key={i}
-              onClick={() => setActiveIndex(i + 1)}
-              className={`relative rounded-[var(--radius)] overflow-hidden ${item.aspect} block cursor-pointer group`}
+              onClick={() => setActiveIndex(i)}
+              className="relative flex-none rounded-[var(--radius)] overflow-hidden cursor-pointer group"
+              style={{ width: "72vw", aspectRatio: "3/4", scrollSnapAlign: "start" }}
             >
               <img
                 src={item.src}
                 alt={item.label}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                className="w-full h-full object-cover transition-transform duration-500 group-active:scale-[1.02]"
               />
             </button>
           ))}
         </div>
-      )}
+      </div>
+
+      {/* Desktop: hero + 3-col grid */}
+      <div className="hidden md:block">
+        {items[0] && (
+          <button
+            onClick={() => setActiveIndex(0)}
+            className={`relative w-full rounded-[var(--radius-lg)] overflow-hidden mb-4 ${items[0].aspect} block cursor-pointer group`}
+          >
+            <img
+              src={items[0].src}
+              alt={items[0].label}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+          </button>
+        )}
+
+        {items.length > 1 && (
+          <div className="grid grid-cols-3 gap-3">
+            {items.slice(1).map((item, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveIndex(i + 1)}
+                className={`relative rounded-[var(--radius)] overflow-hidden ${item.aspect} block cursor-pointer group`}
+              >
+                <img
+                  src={item.src}
+                  alt={item.label}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
       {activeIndex !== null && (
         <Lightbox
